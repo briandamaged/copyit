@@ -6,7 +6,7 @@ var _ = require('lodash');
 
 // Returns a function that will extract the specified
 // path from an object.
-var extractor = exports.extractor = function() {
+exports.from = function() {
   var path = _.flatten(_.toArray(arguments));
 
   return function(obj) {
@@ -22,22 +22,26 @@ var extractor = exports.extractor = function() {
 }
 
 
-var from = exports.from = function() {
-  return extractor(arguments);
-}
+exports.to = function() {
+  var path = _.flatten(_.toArray(arguments));
+  var dest = path.pop();
 
+  return function(obj, value) {
+    var target = obj;
 
-exports.fromParams = function() {
-  return extractor("params", arguments);
-}
+    for(var i = 0; i < path.length; ++i) {
+      var p = path[i];
 
+      var nextTarget = target[p];
+      if(_.isUndefined(nextTarget)) {
+        nextTarget = target[p] = {}
+      }
 
-exports.fromBody = function() {
-  return extractor("body", arguments);
-}
+      target = nextTarget;
+    }
 
-
-exports.fromQuery = function() {
-  return extractor("query", arguments);
+    target[dest] = value
+    return value;
+  }
 }
 
