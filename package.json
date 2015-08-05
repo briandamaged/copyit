@@ -1,0 +1,24 @@
+{
+  "name": "copyit",
+  "version": "0.1.0",
+  "description": "Declare how data is copied into and out of your middleware.",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/briandamaged/copyit.git"
+  },
+  "keywords": [
+    "middleware",
+    "copy",
+    "data"
+  ],
+  "author": "Brian Lauber",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/briandamaged/copyit/issues"
+  },
+  "homepage": "https://github.com/briandamaged/copyit#readme"
+}
