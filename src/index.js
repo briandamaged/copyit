@@ -6,12 +6,14 @@ var _ = require('lodash');
 // Determines whether or not the value that has
 // been provided can be used as a path spec.
 var isPathSpec = exports.isPathSpec = function(thing) {
+  var t = typeof thing;
+
   return(
-    ((typeof thing) === 'string') ||
-    ((typeof thing) === 'number') ||
-    (_.isArray(thing))            ||
-    (_.isArguments(thing))        ||
-    ((typeof thing) === 'boolean')
+    (t === 'string')       ||
+    (t === 'number')       ||
+    (_.isArray(thing))     ||
+    (_.isArguments(thing)) ||
+    (t === 'boolean')
   )
 }
 
@@ -37,10 +39,13 @@ var from = exports.from = function() {
 
 // Will attempt to create a 'from' using the spec.  If
 // no spec was provided, then return undefined.
-exports.buildFrom = function(spec) {
+exports.buildFrom = function(spec, options) {
+  options    = options || {}
+  var prefix = options.prefix || []
+
   if(spec) {
     if(isPathSpec(spec)) {
-      return from(spec);
+      return from(prefix, spec);
     } else {
       return spec;
     }
@@ -77,10 +82,13 @@ var to = exports.to = function() {
 
 // Attempt to create a 'to' from the spec.  If the spec
 // is undefined, then return undefined.
-exports.buildTo = function(spec) {
+exports.buildTo = function(spec, options) {
+  options    = options || {}
+  var prefix = options.prefix || []
+
   if(spec) {
     if(isPathSpec(spec)) {
-      return to(spec);
+      return to(prefix, spec);
     } else {
       return spec;
     }
