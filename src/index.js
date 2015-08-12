@@ -21,7 +21,7 @@ var isPathSpec = exports.isPathSpec = function(thing) {
 
 // Returns a function that will extract the specified
 // path from an object.
-var from = exports.from = function() {
+var getter = exports.getter = exports.from = function() {
   var path = _.flatten(_.toArray(arguments));
 
   return function(obj) {
@@ -37,15 +37,14 @@ var from = exports.from = function() {
 }
 
 
-// Will attempt to create a 'from' using the spec.  If
-// no spec was provided, then return undefined.
-exports.buildFrom = function(spec, options) {
+// Attempts to coerce the spec into a getter.
+getter.coerce = function(spec, options) {
   options    = options || {}
   var prefix = options.prefix || []
 
   if(spec) {
     if(isPathSpec(spec)) {
-      return from(prefix, spec);
+      return getter(prefix, spec);
     } else {
       return spec;
     }
@@ -55,7 +54,7 @@ exports.buildFrom = function(spec, options) {
 
 
 
-var to = exports.to = function() {
+var setter = exports.setter = exports.to = function() {
   var path = _.flatten(_.toArray(arguments));
   var dest = path.pop();
 
@@ -80,15 +79,14 @@ var to = exports.to = function() {
 
 
 
-// Attempt to create a 'to' from the spec.  If the spec
-// is undefined, then return undefined.
-exports.buildTo = function(spec, options) {
+// Attempts to coerce the spec into a setter.
+setter.coerce = function(spec, options) {
   options    = options || {}
   var prefix = options.prefix || []
 
   if(spec) {
     if(isPathSpec(spec)) {
-      return to(prefix, spec);
+      return setter(prefix, spec);
     } else {
       return spec;
     }
