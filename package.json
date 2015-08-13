@@ -1,6 +1,6 @@
 {
   "name": "copyit",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Declare how data is copied into and out of your middleware.",
   "main": "src/index.js",
   "scripts": {
